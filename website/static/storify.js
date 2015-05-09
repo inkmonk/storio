@@ -110,6 +110,7 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
             mySocket.on('handover_snippet_and_start_next_segment',
                         function(data) {
                             console.log('hey im dth');
+                            $scope.currentSegmentId = data.next_segment_id;
                             $scope.alreadyWritten.push(data);
                         }) ;
 
