@@ -1,0 +1,6 @@
+flask
+flask-security
+flask-sqlalchemy
+toolspy
+flask-sqlalchemy-plus
+flask-migrate
