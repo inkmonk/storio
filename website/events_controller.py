@@ -163,6 +163,7 @@ def on_submit_snippet(data):
     if len(segment.snippets) == 0:
         snippet = Snippet.create(
             segment_id=segment_id,
+            user_id=current_user.id,
             text=text, is_first=True)
         next_segment = Segment.create(story_id=story_id)
         emit('handover_snippet_and_start_next_segment', {
@@ -171,9 +172,10 @@ def on_submit_snippet(data):
             'next_segment_id': next_segment.id
             }, broadcast=True, room=data['story_id'])
     else:
-        snippet = Snippet.create(
+        snippet = Snippet.first_or_create(
             segment_id=segment_id,
-            text=text)
+            text=text, user_id=current_user.id,
+            keys=['segment_id', 'user_id'])
         emit('append_snippet', {
             'segment_id': segment_id,
             'snippet': snippet.todict()
