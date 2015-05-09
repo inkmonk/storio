@@ -222,11 +222,14 @@
   <div class="story-container">
         {% raw %}    
         <div class="who-wrote" data-tooltip="Surya wrote this" ng-repeat="content in alreadyWritten | orderBy:'current_segment_id'">
+          <span class="story" ng-repeat="item in content.first_snippet.text.split(' ') track by $index">
+            {{item}}
+          </span>
             <!-- <span class="story">Long ago</span> -->
             <!-- <span class="story">ago</span> -->
             <!-- <span class="story">in</span> -->
             <!-- <span class="story">Chennai.</span> -->
-            {{content.first_snippet.text}}
+            <!-- {{content.first_snippet.text}} -->
         </div>
         {% endraw %}
         <div class="input-holder">
