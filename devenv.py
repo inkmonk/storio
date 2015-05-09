@@ -24,3 +24,6 @@ add = db.session.add
 addall = db.session.add_all
 commit = db.session.commit
 delete = db.session.delete
+
+def create_first_story():
+    return Story.create(title = "my secret story", user_id = 1)

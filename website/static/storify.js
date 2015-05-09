@@ -3,8 +3,6 @@ var story = {
         var storyId = _.last(url.split("/"));
         return parseInt(storyId);
     }
-
-    
 };
 
 var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
@@ -24,10 +22,6 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
             return "test_user";
         }
 
-            // notify('hey');
-
-        $scope.test = "hello world";
-
         // mySocket.emit('connect', {'hi': 'dude'}, function(something) {
         //     console.log('some', something);
         // });
@@ -36,9 +30,40 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
         //     console.log('data', data);
         // });
 
-        function getStoryDetails(storyId)   {
-            $http.get('/stories/' + storyId).
+
+            $scope.peopleWriting = [];
+
+            function updatePeopleWriting(elem) {
+                var items = _.filter($scope.peopleWriting, function(item) {
+                    return item.user === elem.user;
+                });
+                var notItems = _.filter($scope.peopleWriting, function(elem) {
+                    return item.user !== elem.user;
+                });
+                if (items.length === 0) {
+                    return $scope.peopleWriting;
+                } else {
+                    var item = items[0];
+                    item.text = elem.text;
+                    return notItems.append(item);
+                }
+            };
+            $scope.alreadyWritten = [];
+
+        function initializeStoryDetails(storyId)   {
+            $http.get('/json/stories/' + storyId).
                 success(function(data, status, headers, config) {
+                    function mapObject(elem) {
+                        return { current_segment_id: null,
+                                 first_snippet: {
+                                     segment_id: null,
+                                     text: null,
+                                     is_first: null,
+                                     user: null
+                                 },
+                                 next_segment_id: null
+                        };
+                    }
                     console.log('stories', data);
                 }).
                 error(function(data, status, headers, config) {
@@ -46,26 +71,51 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
                 });
         }  
 
+        initializeStoryDetails(story.getStoryId(window.location.href));    
+
         mySocket.emit('join', {story_id: story.getStoryId(window.location.href)});
         
         mySocket.on('user_joined', function(data) {
             notify(data.user + " joined.");
         });    
 
+        mySocket.on('welcome', function(data) {
+            $scope.currentSegmentId = data.current_segment_id = 1;
+        });
+
         $scope.snippetChange = function(snippet) {
-            var requestObj = { user: getUser(),
-                               snippet: snippet
+            var requestObj = { segment_id: $scope.currentSegmentId,
+                               text: snippet,
+                               story_id: story.getStoryId(window.location.href)
                              };
-            
-            console.log('cha ' + snippet);
+            mySocket.emit('modified_snippet_text', requestObj);
         };
+
+            mySocket.on('user_modified_snippet_text', function(data) {
+                console.log('hey coming');
+                updatePeopleWriting(data);
+            });
+
+            
             
         $scope.snippetFinal = function(snippet) {
-            var requestObj = { user: getUser(),
-                               snippet: snippet
+            var requestObj = { story_id:
+                               story.getStoryId(window.location.href),
+                               segment_id: $scope.currentSegmentId,
+                               text: snippet
                              };
-            console.log('final' + snippet);
+            mySocket.emit('submit_snippet', requestObj);
+            $scope.snippet = "";
         };
+            mySocket.on('handover_snippet_and_start_next_segment',
+                        function(data) {
+                            console.log('hey im dth');
+                            $scope.alreadyWritten.push(data);
+                        }) ;
+
+            mySocket.on('append_snippet', function(data) {
+                console.log('srya ' , data);
+            });
     });
 
 storifyApp.directive('ngEnter', function () {
