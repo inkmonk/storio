@@ -4,6 +4,7 @@ from .models import db, user_datastore
 from authenticators import with_basic_authentication
 from .core import security
 from .events_controller import socketio
+import template_filters
 
 
 def create_app(database=db):
@@ -19,4 +20,8 @@ def create_app(database=db):
     app.register_blueprint(create_api_bp(), url_prefix='/json')
     app.register_blueprint(create_api_bp(
         name='api', authenticator=with_basic_authentication))
+    app.jinja_env.filters['timestampize'] = template_filters.timestampize
+    app.jinja_env.filters['hash_hmac'] = template_filters.hash_hmac
+    app.jinja_env.filters['json'] = template_filters.json_dumps
+    app.jinja_env.filters['todict'] = template_filters.todict
     return app
