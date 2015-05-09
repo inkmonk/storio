@@ -1,0 +1,24 @@
+SERVER_NAME = "localhost.com:5000"
+
+DB_USERNAME = 'admin'
+DB_PASSWORD = 'admin'
+DB_SERVER = 'localhost'
+DB_NAME = 'storify'
+
+SQLALCHEMY_DATABASE_URI = 'mysql://{user}:{passwd}@{server}/{db}'.format(
+    user=DB_USERNAME,
+    passwd=DB_PASSWORD,
+    server=DB_SERVER,
+    db=DB_NAME)
+DEBUG = True
+
+SECURITY_PASSWORD_HASH = "bcrypt"
+SECURITY_REGISTERABLE = True
+SECURITY_CONFIRMABLE = False
+SECURITY_RECOVERABLE = True
+SECURITY_REGISTER_URL = '/signup'
+SECURITY_LOGIN_WITHOUT_CONFIRMATION = True
+SECURITY_POST_LOGIN_VIEW = "/storyboard"
+SECURITY_POST_REGISTER_VIEW = "/storyboard"
+SECURITY_SEND_REGISTER_EMAIL = False
+SECURITY_TOKEN_AUTHENTICATION_HEADER = "X-Auth-Token"
