@@ -24,7 +24,7 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
             return "test_user";
         }
 
-            notify('hey');
+            // notify('hey');
 
         $scope.test = "hello world";
 
@@ -36,10 +36,20 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
         //     console.log('data', data);
         // });
 
+        function getStoryDetails(storyId)   {
+            $http.get('/stories/' + storyId).
+                success(function(data, status, headers, config) {
+                    console.log('stories', data);
+                }).
+                error(function(data, status, headers, config) {
+                    console.log('story get error');
+                });
+        }  
+
         mySocket.emit('join', {story_id: story.getStoryId(window.location.href)});
         
         mySocket.on('user_joined', function(data) {
-            console.log('user_joined ', data);
+            notify(data.user + " joined.");
         });    
 
         $scope.snippetChange = function(snippet) {
