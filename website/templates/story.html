@@ -239,6 +239,9 @@
     </div>
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script type="text/javascript">
+        var serverName = "{{config['SERVER_NAME']}}";
+    </script>
+    <script type="text/javascript">
         $(function(){ 
             $('#type-story').keyup(function(){ 
         var size = parseInt($(this).attr('size')); 
