@@ -213,7 +213,7 @@
 <body ng-controller="storifyController">
   <div class="story-container">
         {% raw %}    
-        <div class="who-wrote" data-tooltip="Surya wrote this" ng-repeat="content in alreadyWritten | orderBy:'current_segment_id'">
+        <div class="who-wrote" data-tooltip="{{content.first_snippet.user}} wrote this" ng-repeat="content in alreadyWritten | orderBy:'current_segment_id'">
           <span class="story" ng-repeat="item in content.first_snippet.text.split(' ') track by $index">
             {{item}}
           </span>
