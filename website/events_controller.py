@@ -164,7 +164,7 @@ def on_submit_snippet(data):
         snippet = Snippet.create(
             segment_id=segment_id,
             text=text, is_first=True)
-        next_segment = Segment.create(story_id)
+        next_segment = Segment.create(story_id=story_id)
         emit('handover_snippet_and_start_next_segment', {
             'current_segment_id': segment_id,
             'first_snippet': snippet.todict(),
