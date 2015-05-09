@@ -1,4 +1,5 @@
 from flask import request, abort
+from flask.ext.security import current_user
 import base64
 import hmac
 from hashlib import sha512
@@ -63,3 +64,13 @@ def with_basic_authentication(func):
             logging.error(request.headers)
             abort(401)
     return wrapper
+
+
+def authenticated_socket(f):
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        if not current_user.is_authenticated():
+            request.namespace.disconnect()
+        else:
+            return f(*args, **kwargs)
+    return wrapped
