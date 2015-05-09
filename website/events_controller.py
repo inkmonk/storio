@@ -24,11 +24,15 @@ EVENTS:
         'user': 'sibi'
     }
 
+    CLIENT SENDS:
+
     leave
     -----
     {
         'story_id': 1
     }
+
+    SERVER EMITS:
 
     user_left
     -----------
@@ -37,6 +41,7 @@ EVENTS:
     }
 
 """
+
 
 @socketio.on('join')
 @authenticated_socket
