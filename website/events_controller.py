@@ -162,8 +162,12 @@ def on_submit_snippet(data):
     segment_id = data['segment_id']
     story_id = data['story_id']
     text = data['text']
+    print "getting segment_id %s" % segment_id
     segment = Segment.get(segment_id)
+    print "this segment has foll snippets"
+    print segment.snippets
     if len(segment.snippets) == 0:
+        print "this is first snippet"
         snippet = Snippet.create(
             segment_id=segment_id,
             user_id=current_user.id,
@@ -175,9 +179,11 @@ def on_submit_snippet(data):
             'next_segment_id': next_segment.id
             }, broadcast=True, room=data['story_id'])
     else:
+        print "this is an additional snippet"
         snippet = Snippet.find_or_create(
             segment_id=segment_id,
             text=text, user_id=current_user.id,
+            is_first=False,
             keys=['segment_id', 'user_id'])
         emit('append_snippet', {
             'segment_id': segment_id,
