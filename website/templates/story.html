@@ -1,15 +1,160 @@
 <html ng-app="storifyApp">
   <head>
+    <title>Storify</title>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}"> -->
     <script src="{{url_for('static', filename='bower_components/angular/angular.min.js')}}"></script>
-    <script src="{{url_for('static', filename='bower_components/socket.io-client/socket.io.js')}}"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+    <!-- <script src="{{url_for('static', filename='bower_components/socket.io-client/socket.io.js')}}"></script> -->
     <script src="{{url_for('static', filename='bower_components/angular-socket-io/socket.min.js')}}"></script>
     <script src="{{url_for('static', filename='storify.js')}}"></script>
+    <style type="text/css">
+    @import url(http://weloveiconfonts.com/api/?family=zocial);
+
+        body{
+            font-family: 'Montserrat', sans-serif;
+        }
+        .story-container{
+            width: 800px;
+            min-height: 70px;
+            margin: 80px auto;
+            font-size: 30px;
+            font-weight: 500;
+        }
+        .story{
+            display: inline;
+            float: left;
+            padding: 5px;
+            color: #303235;
+        }
+        ::-webkit-input-placeholder {
+           color: rgba(0, 0, 0, 0.3);
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+          color: rgba(0, 0, 0, 0.3);
+        }
+
+        ::-moz-placeholder {  /* Firefox 19+ */
+           color: rgba(0, 0, 0, 0.3);
+        }
+
+        :-ms-input-placeholder {  
+           color: rgba(0, 0, 0, 0.3); 
+        }
+        input.teller{
+            padding: 10px 10px 10px 0;
+            font-size: 30px;
+            border: none;
+            font-weight: 500;
+        }
+        input.teller:focus{
+            box-shadow: none;
+            border: 0;
+            outline: 0;
+        }
+        ul.other-users{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        ul.other-users li{
+            font-weight: 500;
+            font-size: 30px;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .input-holder{
+            display: inline-block;
+        }
+        span.user-name{
+            position: absolute;
+            left: -70px;
+            font-size: 12px;
+            top: 20px;
+            text-align: right;
+            color: #788594;
+            width: 60px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .who-wrote{
+            position: relative;
+        }
+        .who-wrote:hover{
+            background: #eade99;
+            display: inline-block;
+            float: left;
+            cursor: default;
+        }
+        div[data-tooltip]:before {
+          position: absolute;
+          left: 0;
+          top: -30px;
+          background-color: #3b3e47;
+          color: #ffffff;
+          height: 30px;
+          line-height: 30px;
+          border-radius: 5px;
+          padding: 0 15px;
+          content: attr(data-tooltip);
+          white-space: nowrap;
+          display: none;
+          font-size: 12px;
+        }
+        
+        div[data-tooltip]:hover:after, div[data-tooltip]:hover:before {
+            display: block;
+        }
+        #type-story{
+            max-width: 800px;
+        }
+    </style>
   </head>
 <body ng-controller="storifyController">
   STORIFY
   {% raw %}
   {{test}}
   {% endraw %}
+  <input type="text" name="segment" ng-enter="segmentChange(segment)" ng-model="segment">
+  <div class="story-container">
+        <div class="who-wrote" data-tooltip="Surya wrote this">
+            <span class="story">Long</span>
+            <span class="story">ago</span>
+            <span class="story">in</span>
+            <span class="story">Chennai.</span>
+        </div>
+        <span class="story">There</span>
+        <span class="story">was</span>
+        <span class="story">a</span>
+        <span class="story">guy</span>
+        <span class="story">called</span>
+        <span class="story">Shankar.</span>
+        <div class="input-holder">
+            <input id="type-story"  size="20" autofocus class="teller" placeholder="Start typing..." type="text">
+            <ul class="other-users">
+                <li class="other-typing" style="background:#a2a1d3;">
+                    <span class="user-name">Surya Shankar</span>
+                    He had a secret affair.
+                </li>
+                <li  class="other-typing" style="background:#f6ba92;">
+                    <span class="user-name">Sibi</span>
+                    He was fair and handsome.
+                </li>
+            </ul>  
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function(){ 
+            $('#type-story').keyup(function(){ 
+        var size = parseInt($(this).attr('size')); 
+        var chars = $(this).val().length; 
+        if(chars >= size) $(this).attr('size', chars); 
+            }); 
+        }); 
+    </script>
 </body>
 </html>
