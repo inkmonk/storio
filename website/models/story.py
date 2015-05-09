@@ -18,6 +18,7 @@ class Story(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     snippets = db.relationship("Snippet")
+    segments = db.relationship("Segment")
     user = db.relationship("User")
 
     def __init__(self, title=None, user_id=None):

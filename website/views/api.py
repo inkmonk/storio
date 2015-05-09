@@ -1,7 +1,7 @@
 from flask.ext.security import login_required, current_user
 from flask import Blueprint, request
 from flask_sqlalchemy_plus.responses import as_processed_list, as_obj
-from ..models import Story, Snippet
+from ..models import Story
 
 
 @as_processed_list
@@ -27,20 +27,20 @@ def create_story():
     return Story.create(title=json_data['title'])
 
 
-@as_obj
-def create_snippet(story_id):
-    """
-    POST /json/stories/<story_id>/snippets
+# @as_obj
+# def create_snippet(story_id):
+#     """
+#     POST /json/stories/<story_id>/snippets
 
-    {
-        'text': 'snippet text'
-    }
-    """
-    json_data = request.get_json()
-    return Snippet.create(
-        text=json_data['text'],
-        user_id=current_user.id,
-        story_id=story_id)
+#     {
+#         'text': 'snippet text'
+#     }
+#     """
+#     json_data = request.get_json()
+#     return Snippet.create(
+#         text=json_data['text'],
+#         user_id=current_user.id,
+#         story_id=story_id)
 
 
 def create_api_bp(
@@ -54,8 +54,8 @@ def create_api_bp(
         get_story)
     api_bp.route('/stories', methods=['POST'], endpoint='create_story')(
         authenticator(create_story))
-    api_bp.route('/stories/<story_id>/snippets', methods=['POST'],
-                 endpoint='create_snippet')(
-        authenticator(create_snippet))
+    # api_bp.route('/stories/<story_id>/snippets', methods=['POST'],
+    #              endpoint='create_snippet')(
+    #     authenticator(create_snippet))
 
     return api_bp

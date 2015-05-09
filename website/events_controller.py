@@ -14,14 +14,19 @@ def connect_user(data):
 @socketio.on('join')
 @authenticated_socket
 def on_join(data):
-    story = data['story_id']
-    join_room(story)
-    send(current_user.name + ' has entered the room.', room=story)
+    story_id = data['story_id']
+    join_room(story_id)
+    send(current_user.name + ' has entered the room.', room=story_id)
+
+
+# @socketio.on('snippet create')
+# @authenticated_socket
+# def on_snippet_create(data):
 
 
 @socketio.on('leave')
 @authenticated_socket
 def on_leave(data):
-    story = data['story_id']
-    leave_room(story)
-    send(current_user.name + ' has left the room.', room=story)
+    story_id = data['story_id']
+    leave_room(story_id)
+    send(current_user.name + ' has left the room.', room=story_id)

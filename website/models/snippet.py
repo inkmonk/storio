@@ -13,20 +13,23 @@ class Snippet(db.Model):
     text = db.Column(db.UnicodeText)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_at = db.Column(db.DateTime())
-    story_id = db.Column(db.Integer, db.ForeignKey('story.id'))
+    # story_id = db.Column(db.Integer, db.ForeignKey('story.id'))
+    segment_id = db.Column(db.Integer, db.ForeignKey('segment.id'))
 
     user = db.relationship("User")
-    story = db.relationship("Story")
+    # story = db.relationship("Story")
+    segment = db.relationship("Segment")
 
     def __init__(self, text=None, user_id=None, user=None,
-                 story_id=None, story=None):
+                 segment_id=None,
+                 segment=None):
         self.text = text
         if user_id:
             self.user_id = user_id
         elif user:
             self.user = user
         self.created_at = ist_now()
-        if story_id:
-            self.story_id = story_id
-        elif story:
-            self.story = story
+        if segment_id:
+            self.segment_id = segment_id
+        elif segment:
+            self.segment = segment
