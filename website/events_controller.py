@@ -10,7 +10,7 @@ EVENTS:
     
     CLIENT SENDS:
 
-    join 
+    join
     ----
     {
         'story_id': 1
@@ -48,7 +48,7 @@ EVENTS:
 def on_join(data):
     story_id = data['story_id']
     join_room(story_id)
-    emit('user_joined', {'user': current_user.name}, room=story_id)
+    emit('user_joined', {'user': current_user.email}, room=story_id)
 
 
 @socketio.on('leave')
@@ -56,15 +56,15 @@ def on_join(data):
 def on_leave(data):
     story_id = data['story_id']
     leave_room(story_id)
-    send(current_user.name + ' has left the room.', room=story_id)
-    emit('user_left', {'user': current_user.name}, room=story_id)
+    send(current_user.email + ' has left the room.', room=story_id)
+    emit('user_left', {'user': current_user.email}, room=story_id)
 
 
 @socketio.on('modify_snippet_text')
 @authenticated_socket
 def on_modify_snippet_text(data):
     emit('user_modified_snippet_text', {
-        'user': current_user.name,
+        'user': current_user.email,
         'text': data['text'],
         'segment_id': data['segment_id']
         }, room=data['story_id'])
