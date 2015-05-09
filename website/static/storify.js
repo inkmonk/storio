@@ -80,7 +80,7 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
         });    
 
         mySocket.on('welcome', function(data) {
-            $scope.currentSegmentId = data.current_segment_id = 1;
+            $scope.currentSegmentId = data.current_segment_id;
         });
 
         $scope.snippetChange = function(snippet) {
