@@ -15,6 +15,12 @@ class Role(db.Model, RoleMixin):
         self.description = description
 
 
+role_user = db.Table(
+    'role_user',
+    db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+    db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+
+
 class User(db.Model, UserMixin):
 
     __tablename__ = 'user'
@@ -23,8 +29,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     active = db.Column(db.Boolean())
-
-role_user = db.Table(
-    'role_user',
-    db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-    db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+    roles = db.relationship(
+        'Role', secondary=role_user,
+        backref=db.backref('users', lazy='dynamic'))
