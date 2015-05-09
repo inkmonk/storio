@@ -6,6 +6,9 @@ class Snippet(db.Model):
 
     __tablename__ = 'snippet'
 
+    _attrs_to_serialize_ = ['id', 'text', 'story_id']
+    _rels_to_serialize_ = [('user', 'name')]
+
     id = db.Column(db.Integer, primary_key=True, unique=True)
     text = db.Column(db.UnicodeText)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
