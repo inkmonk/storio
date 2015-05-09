@@ -9,7 +9,7 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io'])
         return mySocket;
     })
     .controller('storifyController', function($scope, mySocket) {
-        console.log('hell world');
+
         $scope.test = "hello world";
 
         mySocket.emit('connect', {'hi': 'dude'}, function(something) {
