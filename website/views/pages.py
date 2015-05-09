@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from .models import Story
+from ..models import Story
 
 
 pages_bp = Blueprint('standalone_pages_bp', __name__)
