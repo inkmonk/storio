@@ -9,6 +9,7 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
     .factory('mySocket', function(socketFactory) {
         var myIoSocket = io.connect('http://localhost.com:5000');
 
+
         var mySocket = socketFactory({
             ioSocket: myIoSocket
         });
