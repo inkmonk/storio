@@ -110,6 +110,9 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
             
             
         $scope.snippetFinal = function(snippet) {
+            if (snippet.length < 20 || snippet.length > 40) {
+                return;
+            }
             var requestObj = { story_id:
                                story.getStoryId(window.location.href),
                                segment_id: $scope.currentSegmentId,
