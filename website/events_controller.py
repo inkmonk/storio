@@ -130,7 +130,7 @@ def on_join(data):
         'current_segment_id': current_segment.id
         }, room=story_id)
     emit('user_joined', {
-        'user': current_user.email,
+        'user': current_user.name,
         }, broadcast=True, room=story_id)
 
 
@@ -139,8 +139,8 @@ def on_join(data):
 def on_leave(data):
     story_id = data['story_id']
     leave_room(story_id)
-    send(current_user.email + ' has left the room.', room=story_id)
-    emit('user_left', {'user': current_user.email},
+    send(current_user.name + ' has left the room.', room=story_id)
+    emit('user_left', {'user': current_user.name},
          room=story_id, broadcast=True)
 
 
@@ -149,7 +149,7 @@ def on_leave(data):
 def on_modify_snippet_text(data):
     print "inside on_modify_snippet_text"
     emit('user_modified_snippet_text', {
-        'user': current_user.email,
+        'user': current_user.name,
         'text': data['text'],
         'segment_id': data['segment_id']
         }, room=data['story_id'], broadcast=True)

@@ -1,4 +1,4 @@
-from flask import request, abort
+from flask import request, abort, session
 from flask.ext.security import current_user
 import base64
 import hmac
@@ -70,6 +70,16 @@ def authenticated_socket(f):
     @wraps(f)
     def wrapped(*args, **kwargs):
         if not current_user.is_authenticated():
+            request.namespace.disconnect()
+        else:
+            return f(*args, **kwargs)
+    return wrapped
+
+
+def identified_socket(f):
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        if 'current_user_id' not in session:
             request.namespace.disconnect()
         else:
             return f(*args, **kwargs)

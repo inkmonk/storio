@@ -5,6 +5,7 @@ from authenticators import with_basic_authentication
 from .core import security
 from .events_controller import socketio
 import template_filters
+from .forms import LoginForm
 
 
 def create_app(database=db):
@@ -13,7 +14,12 @@ def create_app(database=db):
     app.config.from_envvar('STORIO_CONFIG')
     database.init_app(app)
 
-    security.init_app(app, user_datastore)
+    security.init_app(
+        app, user_datastore,
+        login_form=LoginForm,
+        register_form=LoginForm,
+        confirm_register_form=LoginForm,
+        )
     socketio.init_app(app)
 
     app.register_blueprint(pages_bp)
