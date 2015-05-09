@@ -10,7 +10,7 @@ class Story(db.Model):
 
     _rels_to_expand_ = ['segments']
 
-    _rels_to_serialize_ = [('user', 'name')]
+    _rels_to_serialize_ = [('user', 'email')]
 
     id = db.Column(db.Integer, primary_key=True, unique=True)
     title = db.Column(db.Unicode(100))

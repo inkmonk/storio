@@ -7,7 +7,7 @@ class Snippet(db.Model):
     __tablename__ = 'snippet'
 
     _attrs_to_serialize_ = ['text', 'segment_id', 'is_first']
-    _rels_to_serialize_ = [('user', 'name')]
+    _rels_to_serialize_ = [('user', 'email')]
 
     id = db.Column(db.Integer, primary_key=True, unique=True)
     text = db.Column(db.UnicodeText)
