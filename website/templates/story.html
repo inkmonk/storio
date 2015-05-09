@@ -113,14 +113,109 @@
             max-width: 800px;
             color:#98A0A6;
         }
+        @-webkit-keyframes throbber {
+          0% {
+            background: #dde2e7;
+          }
+          10% {
+            background: #6b9dc8;
+          }
+          40% {
+            background: #dde2e7;
+          }
+        }
+
+        @-moz-keyframes throbber {
+          0% {
+            background: #dde2e7;
+          }
+          10% {
+            background: #6b9dc8;
+          }
+          40% {
+            background: #dde2e7;
+          }
+        }
+
+        @-o-keyframes throbber {
+          0% {
+            background: #dde2e7;
+          }
+          10% {
+            background: #6b9dc8;
+          }
+          40% {
+            background: #dde2e7;
+          }
+        }
+
+        @keyframes throbber {
+          0% {
+            background: #dde2e7;
+          }
+          10% {
+            background: #6b9dc8;
+          }
+          40% {
+            background: #dde2e7;
+          }
+        }
+
+        /* Styles for old versions of IE */
+        .throbber {
+          position: absolute;
+        }
+
+        /* :not(:required) hides these rules from IE9 and below */
+        .throbber:not(:required) {
+          -webkit-animation: throbber 2000ms 300ms infinite ease-out;
+          -khtml-animation: throbber 2000ms 300ms infinite ease-out;
+          -moz-animation: throbber 2000ms 300ms infinite ease-out;
+          -ms-animation: throbber 2000ms 300ms infinite ease-out;
+          -o-animation: throbber 2000ms 300ms infinite ease-out;
+          animation: throbber 2000ms 300ms infinite ease-out;
+          background: #dde2e7;
+          display: inline-block;
+          text-indent: -9999px;
+          width: 5px;
+          height: 5px;
+          margin: 5px;
+          left: -32px;
+          top: 35px;
+        }
+
+        .throbber:not(:required):before, .throbber:not(:required):after {
+          background: #dde2e7;
+          content: '\x200B';
+          display: inline-block;
+          width: 5px;
+          height: 5px;
+          position: absolute;
+          top: 0;
+        }
+
+        .throbber:not(:required):before {
+          -webkit-animation: throbber 2000ms 150ms infinite ease-out;
+          -khtml-animation: throbber 2000ms 150ms infinite ease-out;
+          -moz-animation: throbber 2000ms 150ms infinite ease-out;
+          -ms-animation: throbber 2000ms 150ms infinite ease-out;
+          -o-animation: throbber 2000ms 150ms infinite ease-out;
+          animation: throbber 2000ms 150ms infinite ease-out;
+          left: -10px;
+        }
+
+        .throbber:not(:required):after {
+          -webkit-animation: throbber 2000ms 450ms infinite ease-out;
+          -khtml-animation: throbber 2000ms 450ms infinite ease-out;
+          -moz-animation: throbber 2000ms 450ms infinite ease-out;
+          -ms-animation: throbber 2000ms 450ms infinite ease-out;
+          -o-animation: throbber 2000ms 450ms infinite ease-out;
+          animation: throbber 2000ms 450ms infinite ease-out;
+          right: -10px;
+        }
     </style>
   </head>
 <body ng-controller="storifyController">
-  STORIFY
-  {% raw %}
-  {{test}}
-  {% endraw %}
-  <input type="text" name="segment" ng-enter="segmentChange(segment)" ng-model="segment">
   <div class="story-container">
         <div class="who-wrote" data-tooltip="Surya wrote this">
             <span class="story">Long</span>
@@ -139,10 +234,12 @@
             <ul class="other-users">
                 <li class="other-typing" style="background:#a2a1d3;">
                     <span class="user-name">Surya Shankar</span>
+                    <div class="throbber"></div>
                     He had a secret affair.
                 </li>
                 <li  class="other-typing" style="background:#f6ba92;">
                     <span class="user-name">Sibi</span>
+                    <div class="throbber"></div>
                     He was fair and handsome.
                 </li>
             </ul>  

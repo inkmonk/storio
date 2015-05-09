@@ -8,7 +8,7 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io'])
 
         return mySocket;
     })
-    .controller('storifyController', function($scope, mySocket) {
+        .controller('storifyController', function($scope, mySocket, $http) {
 
         $scope.test = "hello world";
 
@@ -20,8 +20,8 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io'])
             console.log('data', data);
         });
 
-        $scope.segmentChange = function(segment) {
-            console.log(segment);
+        $scope.snippetChange = function(snippet) {
+            console.log(snippet);
         };
     });
 
