@@ -8,7 +8,7 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io'])
 
         return mySocket;
     })
-    .controller('storifyController', function($scope, mySocket) {
+        .controller('storifyController', function($scope, mySocket, $http) {
 
         $scope.test = "hello world";
 
