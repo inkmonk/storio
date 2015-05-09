@@ -26,4 +26,5 @@ commit = db.session.commit
 delete = db.session.delete
 
 def create_first_story():
-    return Story.create(title = "my secret story", user_id = 1)
+    s = Story.create(title = "my secret story", user_id = 1)
+    return s.id
