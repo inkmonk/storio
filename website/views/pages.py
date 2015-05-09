@@ -23,3 +23,7 @@ def get_story(story_id):
     if story is None:
         abort(404)
     return render_template('story.html', story=story)
+
+@pages_bp.route('/stories/angular-notify.html')
+def notify():
+    return render_template('angular-notify.html')

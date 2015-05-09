@@ -1,4 +1,13 @@
-var storifyApp = angular.module('storifyApp', ['btford.socket-io'])
+var story = {
+    getStoryId : function(url) {
+        var storyId = _.last(url.split("/"));
+        return parseInt(storyId);
+    }
+
+    
+};
+
+var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
     .factory('mySocket', function(socketFactory) {
         var myIoSocket = io.connect('http://localhost.com:5000');
 
@@ -8,20 +17,54 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io'])
 
         return mySocket;
     })
-        .controller('storifyController', function($scope, mySocket, $http) {
+        .controller('storifyController', function($scope, mySocket,
+                                                  $http, notify) {
+
+        function getUser() {
+            return "test_user";
+        }
+
+            // notify('hey');
 
         $scope.test = "hello world";
 
-        mySocket.emit('connect', {'hi': 'dude'}, function(something) {
-            console.log('some', something);
-        });
+        // mySocket.emit('connect', {'hi': 'dude'}, function(something) {
+        //     console.log('some', something);
+        // });
 
-        mySocket.on('welcome', function(data) {
-            console.log('data', data);
-        });
+        // mySocket.on('welcome', function(data) {
+        //     console.log('data', data);
+        // });
+
+        function getStoryDetails(storyId)   {
+            $http.get('/stories/' + storyId).
+                success(function(data, status, headers, config) {
+                    console.log('stories', data);
+                }).
+                error(function(data, status, headers, config) {
+                    console.log('story get error');
+                });
+        }  
+
+        mySocket.emit('join', {story_id: story.getStoryId(window.location.href)});
+        
+        mySocket.on('user_joined', function(data) {
+            notify(data.user + " joined.");
+        });    
 
         $scope.snippetChange = function(snippet) {
-            console.log(snippet);
+            var requestObj = { user: getUser(),
+                               snippet: snippet
+                             };
+            
+            console.log('cha ' + snippet);
+        };
+            
+        $scope.snippetFinal = function(snippet) {
+            var requestObj = { user: getUser(),
+                               snippet: snippet
+                             };
+            console.log('final' + snippet);
         };
     });
 
