@@ -5,12 +5,38 @@ from .authenticators import authenticated_socket
 from flask.ext.security import current_user
 from .models import Segment, Snippet
 
+"""
+EVENTS:
+    
+    CLIENT SENDS:
 
-@socketio.on('connect')
-def connect_user(data):
-    print data
-    emit('welcome', {'data': 'Connected'})
+    join 
+    ----
+    {
+        'story_id': 1
+    }
 
+    SERVER EMITS:
+
+    user_joined
+    -----------
+    {
+        'user': 'sibi'
+    }
+
+    leave
+    -----
+    {
+        'story_id': 1
+    }
+
+    user_left
+    -----------
+    {
+        'user': 'sibi'
+    }
+
+"""
 
 @socketio.on('join')
 @authenticated_socket
