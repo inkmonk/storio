@@ -6,12 +6,18 @@ from ..models import Story
 
 @as_processed_list
 def list_stories():
+    """
+    GET /json/stories
+    """
     return Story
 
 
 @as_obj
 def get_story(story_id):
-    return Story.first(id=story_id, user_id=current_user.id)
+    """
+    GET /json/stories/2
+    """
+    return Story.first(id=story_id)
 
 
 @as_obj
