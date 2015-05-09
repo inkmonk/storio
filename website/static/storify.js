@@ -21,6 +21,7 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
             window.SCOPE = $scope;
 
             $scope.peopleWriting = [];
+            $scope.userEmail = user;
 
             function updatePeopleWriting(elem) {
                 // If elem.user is already present in
