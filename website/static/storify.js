@@ -7,7 +7,7 @@ var story = {
 
 var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
     .factory('mySocket', function(socketFactory) {
-        var myIoSocket = io.connect('http://localhost.com:5000');
+        var myIoSocket = io.connect('http://' + serverName);
 
 
         var mySocket = socketFactory({
@@ -19,26 +19,36 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
         .controller('storifyController', function($scope, mySocket,
                                                   $http, notify) {
 
-        function getUser() {
-            return "test_user";
-        }
+            window.SCOPE = $scope;
 
             $scope.peopleWriting = [];
 
             function updatePeopleWriting(elem) {
+                // If elem.user is already present in
+                // $scope.peopleWriting then just update the text.
+                // If $scope.peopleWriting is empty, then return an
+                // array with a single element.
+                if (_.isEmpty($scope.peopleWriting)) {
+                    return [elem];
+                }
                 var items = _.filter($scope.peopleWriting, function(item) {
                     return item.user === elem.user;
                 });
-                var notItems = _.filter($scope.peopleWriting, function(elem) {
-                    return item.user !== elem.user;
-                });
-                if (items.length === 0) {
-                    return $scope.peopleWriting;
-                } else {
+                if (items.length > 0) {
                     var item = items[0];
                     item.text = elem.text;
-                    return notItems.append(item);
+                    var notItems = _.filter($scope.peopleWriting, function(elem) {
+                        return item.user !== elem.user;
+                    });
+                    notItems.push(item);
+                    return notItems;
+                } 
+                if (items.length === 0) {
+                    $scope.peopleWriting.push(elem);
+                    return $scope.peopleWriting;
                 }
+                console.log('should not reach here');
+                return $scope.peopleWriting;
             };
             $scope.alreadyWritten = [];
 
@@ -75,6 +85,7 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
         
         mySocket.on('user_joined', function(data) {
             notify(data.user + " joined.");
+            console.log(data.user + "joined.");
         });    
 
         mySocket.on('welcome', function(data) {
@@ -86,12 +97,14 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
                                text: snippet,
                                story_id: story.getStoryId(window.location.href)
                              };
-            mySocket.emit('modified_snippet_text', requestObj);
+            console.log('hey its changing');
+            mySocket.emit('modify_snippet_text', requestObj);
         };
 
             mySocket.on('user_modified_snippet_text', function(data) {
-                console.log('hey coming');
-                updatePeopleWriting(data);
+                console.log('user_modified_snippet_text handler');
+                $scope.peopleWriting = updatePeopleWriting(data);
+                console.log('server data', data);
             });
 
             
@@ -102,18 +115,21 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
                                segment_id: $scope.currentSegmentId,
                                text: snippet
                              };
+            console.log('enter yo fool');
             mySocket.emit('submit_snippet', requestObj);
             $scope.snippet = "";
         };
             mySocket.on('handover_snippet_and_start_next_segment',
                         function(data) {
-                            console.log('hey im dth');
+                            console.log('handover snippet and start'
+                                        + ' next segemt');
+                            $scope.peopleWriting = [];
                             $scope.currentSegmentId = data.next_segment_id;
                             $scope.alreadyWritten.push(data);
                         }) ;
 
             mySocket.on('append_snippet', function(data) {
-                console.log('srya ' , data);
+                console.log('srya- append snippet ' , data);
             });
     });
 
