@@ -22,6 +22,7 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
             window.SCOPE = $scope;
 
             $scope.peopleWriting = [];
+            $scope.userEmail = user;
 
             function updatePeopleWriting(elem) {
                 // If elem.user is already present in
@@ -110,6 +111,9 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
             
             
         $scope.snippetFinal = function(snippet) {
+            if (snippet.length < 20 || snippet.length > 40) {
+                return;
+            }
             var requestObj = { story_id:
                                story.getStoryId(window.location.href),
                                segment_id: $scope.currentSegmentId,
@@ -131,6 +135,11 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
             mySocket.on('append_snippet', function(data) {
                 console.log('srya- append snippet ' , data);
             });
+
+            $scope.computeColor = function(index) {
+                var newIndex = index % 8;
+                return colors[newIndex];
+            };
     });
 
 storifyApp.directive('ngEnter', function () {
