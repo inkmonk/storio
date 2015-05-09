@@ -49,6 +49,7 @@ EVENTS:
     }
 
     CLIENT EMITS:
+    (Every time text changes)
 
     modify_snippet_text
     -------------------
@@ -66,7 +67,7 @@ EVENTS:
     {
        'user': 'sibi',
        'text': 'Hello worl',
-       'segment_id': 13
+       'seigment_id': 13
     }
 
     CLIENT EMITS:
@@ -84,7 +85,7 @@ EVENTS:
     handover_snippet_and_start_next_segment
     ---------------------------------------
     {
-        'segment_id': 13,
+        'current_segment_id': 13,
         'first_snippet': {
             'segment_id': 13,
             'text': 'Hello world. I finished my snippet',
@@ -165,7 +166,7 @@ def on_submit_snippet(data):
             text=text, is_first=True)
         next_segment = Segment.create(story_id)
         emit('handover_snippet_and_start_next_segment', {
-            'segment_id': segment_id,
+            'current_segment_id': segment_id,
             'first_snippet': snippet.todict(),
             'next_segment_id': next_segment.id
             }, broadcast=True, room=data['story_id'])
