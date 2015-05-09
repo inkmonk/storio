@@ -13,7 +13,9 @@ def home():
 
 @pages_bp.route('/stories')
 def index_stories():
-    return render_template('stories.html')
+    stories = Story.all()
+    return render_template(
+        'stories.html', stories=stories)
 
 
 @pages_bp.route('/stories/<story_id>')
@@ -23,6 +25,7 @@ def get_story(story_id):
     if story is None:
         abort(404)
     return render_template('story.html', story=story)
+
 
 @pages_bp.route('/stories/angular-notify.html')
 def notify():
