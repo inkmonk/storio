@@ -6,23 +6,22 @@ class Snippet(db.Model):
 
     __tablename__ = 'snippet'
 
-    _attrs_to_serialize_ = ['id', 'text', 'story_id']
+    _attrs_to_serialize_ = ['id', 'text', 'segment_id']
     _rels_to_serialize_ = [('user', 'name')]
 
     id = db.Column(db.Integer, primary_key=True, unique=True)
     text = db.Column(db.UnicodeText)
+    is_first = db.Column(db.Boolean())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_at = db.Column(db.DateTime())
-    # story_id = db.Column(db.Integer, db.ForeignKey('story.id'))
     segment_id = db.Column(db.Integer, db.ForeignKey('segment.id'))
 
     user = db.relationship("User")
-    # story = db.relationship("Story")
     segment = db.relationship("Segment")
 
     def __init__(self, text=None, user_id=None, user=None,
-                 segment_id=None,
-                 segment=None):
+                 segment_id=None, segment=None,
+                 is_first=False):
         self.text = text
         if user_id:
             self.user_id = user_id
