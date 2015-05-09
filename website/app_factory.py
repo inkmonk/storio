@@ -9,7 +9,7 @@ from .events_controller import socketio
 def create_app(database=db):
     app = Flask(__name__)
     app.config.from_object('website.config')
-    app.config.from_envvar('STORIFY_CONFIG')
+    app.config.from_envvar('STORIO_CONFIG')
     database.init_app(app)
 
     security.init_app(app, user_datastore)
