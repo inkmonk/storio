@@ -17,7 +17,6 @@ class Story(db.Model):
     created_at = db.Column(db.DateTime())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    snippets = db.relationship("Snippet")
     segments = db.relationship("Segment")
     user = db.relationship("User")
 
