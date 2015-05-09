@@ -32,3 +32,5 @@ class Snippet(db.Model):
             self.segment_id = segment_id
         elif segment:
             self.segment = segment
+        self.is_first = is_first
+
