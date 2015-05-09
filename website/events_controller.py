@@ -53,3 +53,10 @@ def on_submit_snippet(data):
             'segment_id': segment_id,
             'first_snippet': snippet.todict(),
             })
+    else:
+        snippet = Snippet.create(
+            segment_id=segment_id,
+            text=text)
+        emit('append_snippet', {
+            'segment_id': segment_id
+            })

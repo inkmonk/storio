@@ -6,7 +6,7 @@ class Snippet(db.Model):
 
     __tablename__ = 'snippet'
 
-    _attrs_to_serialize_ = ['id', 'text', 'segment_id']
+    _attrs_to_serialize_ = ['id', 'text', 'segment_id', 'is_first']
     _rels_to_serialize_ = [('user', 'name')]
 
     id = db.Column(db.Integer, primary_key=True, unique=True)
