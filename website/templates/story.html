@@ -228,7 +228,7 @@
             <input id="type-story"  size="20" autofocus class="teller" placeholder="Start typing..." type="text" ng-change="snippetChange(snippet)" ng-enter="snippetFinal(snippet)" ng-model="snippet">
             <ul class="other-users">
               {% raw %}
-                <li class="other-typing" style="background:#a2a1d3;" ng-repeat="people in peopleWriting">
+                <li class="other-typing" style="background:#a2a1d3;" ng-repeat="people in peopleWriting" ng-hide="people.user === userEmail">
                     <span class="user-name">{{people.user}}</span>
                     <div class="throbber"></div>
                     {{people.text}}
@@ -240,6 +240,7 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script type="text/javascript">
         var serverName = "{{config['SERVER_NAME']}}";
+        var user = "{{current_user.email}}"
     </script>
     <script type="text/javascript">
         $(function(){ 
