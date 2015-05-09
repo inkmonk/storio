@@ -131,6 +131,11 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
             mySocket.on('append_snippet', function(data) {
                 console.log('srya- append snippet ' , data);
             });
+
+            $scope.computeColor = function(index) {
+                var newIndex = index % 8;
+                return colors[newIndex];
+            };
     });
 
 storifyApp.directive('ngEnter', function () {

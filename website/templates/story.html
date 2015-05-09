@@ -228,7 +228,7 @@
             <input id="type-story"  size="20" autofocus class="teller" placeholder="Start typing..." type="text" ng-change="snippetChange(snippet)" ng-enter="snippetFinal(snippet)" ng-model="snippet">
             <ul class="other-users">
               {% raw %}
-                <li class="other-typing" style="background:#a2a1d3;" ng-repeat="people in peopleWriting" ng-hide="people.user === userEmail">
+                <li class="other-typing" ng-style="{'background-color':computeColor($index)}" ng-repeat="people in peopleWriting" ng-hide="people.user === userEmail">
                     <span class="user-name">{{people.user}}</span>
                     <div class="throbber"></div>
                     {{people.text}}
@@ -236,11 +236,14 @@
               {% endraw %}
             </ul>  
         </div>
-    </div>
+  </div>
+  
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script type="text/javascript">
         var serverName = "{{config['SERVER_NAME']}}";
         var user = "{{current_user.email}}"
+        var colors = ["#A2A1D3", "#F6BA92", "#C4E49C", "#9CB3E4",
+        "#EEF1A0", "#F1D5A0", "#ABF1A0", "8CC7E2"]
     </script>
     <script type="text/javascript">
         $(function(){ 
