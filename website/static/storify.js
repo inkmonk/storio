@@ -22,15 +22,6 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
             return "test_user";
         }
 
-        // mySocket.emit('connect', {'hi': 'dude'}, function(something) {
-        //     console.log('some', something);
-        // });
-
-        // mySocket.on('welcome', function(data) {
-        //     console.log('data', data);
-        // });
-
-
             $scope.peopleWriting = [];
 
             function updatePeopleWriting(elem) {
@@ -54,17 +45,23 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
             $http.get('/json/stories/' + storyId).
                 success(function(data, status, headers, config) {
                     function mapObject(elem) {
-                        return { current_segment_id: null,
-                                 first_snippet: {
-                                     segment_id: null,
-                                     text: null,
-                                     is_first: null,
-                                     user: null
-                                 },
+                        var snippet = elem.snippets;
+                        var firstSnippet = _.first(_.filter(snippet, function(elem)
+                                                            {
+                                                                return elem.is_first === true;
+                                                            }));
+                        return { current_segment_id: elem.id,
+                                 first_snippet: firstSnippet,
                                  next_segment_id: null
                         };
                     }
-                    console.log('stories', data);
+                    data = data.result;
+                    var segments = data.segments;
+                    $scope.alreadyWritten = _.map(segments,
+                                                  function(elem) {
+                                                      return mapObject(elem);
+                                                  });
+                    console.log('stories', $scope.alreadyWritten);
                 }).
                 error(function(data, status, headers, config) {
                     console.log('story get error');
