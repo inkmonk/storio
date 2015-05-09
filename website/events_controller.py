@@ -172,7 +172,7 @@ def on_submit_snippet(data):
             'next_segment_id': next_segment.id
             }, broadcast=True, room=data['story_id'])
     else:
-        snippet = Snippet.first_or_create(
+        snippet = Snippet.find_or_create(
             segment_id=segment_id,
             text=text, user_id=current_user.id,
             keys=['segment_id', 'user_id'])
