@@ -8,7 +8,7 @@ class Story(db.Model):
 
     _attrs_to_serialize_ = ['title', 'created_at']
 
-    _rels_to_expand_ = ['segments']
+    _rels_to_expand_ = ['segments.snippets']
 
     _rels_to_serialize_ = [('user', 'email')]
 
