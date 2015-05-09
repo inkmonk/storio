@@ -6,7 +6,7 @@ class Segment(db.Model):
 
     __tablename__ = 'segment'
 
-    _attrs_to_serialize_ = ['id', 'story_id']
+    _attrs_to_serialize_ = ['id', 'story_id', 'created_at']
 
     _rels_to_expand_ = ['snippets']
 

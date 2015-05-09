@@ -120,6 +120,7 @@ EVENTS:
 @socketio.on('join')
 @authenticated_socket
 def on_join(data):
+    print "inside on_join"
     story_id = data['story_id']
     current_segment = Segment.last(story_id=story_id)
     if current_segment is None:
@@ -146,6 +147,7 @@ def on_leave(data):
 @socketio.on('modify_snippet_text')
 @authenticated_socket
 def on_modify_snippet_text(data):
+    print "inside on_modify_snippet_text"
     emit('user_modified_snippet_text', {
         'user': current_user.email,
         'text': data['text'],
@@ -156,6 +158,7 @@ def on_modify_snippet_text(data):
 @socketio.on('submit_snippet')
 @authenticated_socket
 def on_submit_snippet(data):
+    print "inside on_submit_snippet"
     segment_id = data['segment_id']
     story_id = data['story_id']
     text = data['text']
