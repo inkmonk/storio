@@ -12,8 +12,12 @@ angular.module('storifyApp', ['btford.socket-io'])
         console.log('hell world');
         $scope.test = "hello world";
 
-        mySocket.emit('connect', function(something) {
+        mySocket.emit('connect', {'hi': 'dude'}, function(something) {
             console.log('some', something);
+        });
+
+        mySocket.on('welcome', function(data) {
+            console.log('data', data);
         });
     });
 
