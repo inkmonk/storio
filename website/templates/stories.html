@@ -1,8 +1,26 @@
 <html>
-<body>
-	STORIES
-    <script type="text/javascript">
-      var storyCache = {{stories | todict() | json | safe}}
-    </script>
-</body>
+	<head>
+		<title>
+			Storio
+		</title>
+	</head>
+	<body>
+		STORIES
+		<ul>
+		{% for story in stories %}
+		<li>
+			<a href="{{url_for('.get_story', story_id=story.id)}}">
+				{{story.title}}
+			</a>
+		</li>
+		{% endfor %}
+		</ul>
+		<form method="POST" action="/stories">
+			<input type="text" name="title" id="title"></input>
+			<button type="submit" value="Create">Create New Story</button>
+		</form>
+	    <script type="text/javascript">
+	      var storyCache = {{stories | todict() | json | safe}}
+	    </script>
+	</body>
 </html>
