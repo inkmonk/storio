@@ -17,6 +17,13 @@
             font-size: 30px;
             font-weight: 500;
         }
+        .count {
+            position: absolute;
+            left: 0px;
+            top: 5px;
+            font-size: 14px;
+            color: #C2C6CB;
+        }
         .story{
             display: inline;
             float: left;
@@ -43,6 +50,7 @@
             font-size: 30px;
             border: none;
             font-weight: 500;
+            padding-left: 30px;
         }
         input.teller:focus{
             box-shadow: none;
@@ -63,6 +71,7 @@
         
         .input-holder{
             display: inline-block;
+            position: relative;
         }
         span.user-name{
             position: absolute;
@@ -242,6 +251,9 @@
         </div>
         {% endraw %}
         <div class="input-holder">
+          {% raw %}
+          <label class="count" ng-style="{'color':colorCount}">{{computeCount(snippet)}}</label>
+          {% endraw %}
             <input id="type-story"  size="20" autofocus class="teller" placeholder="Start typing..." type="text" ng-change="snippetChange(snippet)" ng-enter="snippetFinal(snippet)" ng-model="snippet">
             <ul class="other-users">
               {% raw %}
