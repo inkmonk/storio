@@ -122,14 +122,14 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
                 if (snippet === null || snippet === undefined) {
                     return "#ec5959";
                 }
-                if (snippet.length < 20 || snippet.length > 40) {
+                if (snippet.length < 10 || snippet.length > 40) {
                     return "#ec5959";
                 }
                 return "#C2C6CB";
             };
             
         $scope.snippetFinal = function(snippet) {
-            if (snippet.length < 20 || snippet.length > 40) {
+            if (snippet.length < 10 || snippet.length > 40) {
                 return;
             }
             var requestObj = { story_id:
