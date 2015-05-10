@@ -3,9 +3,140 @@
 		<title>
 			Storio
 		</title>
+    <style type="text/css">
+body {
+	font-family: "lucida grande", sans-serif;
+	font-size: 13px;
+	line-height: 1.5;
+	color: #666;
+	padding: 0;
+	margin: 0;
+	background-color: #f2f2f2;
+}
+
+.container {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: #fff;
+	border-bottom: 1px solid #ddd;
+}
+
+h1 {
+	margin: 0;
+	padding: 10px 15px;
+	background-color: #aea894;
+	border-bottom: 1px solid #989077;
+	color: #fff;
+	
+	font-size: 16px;
+ text-align: left;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+.list {
+  text-align: center;
+}
+
+.list a {
+  color: #07b;
+  text-decoration: none;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+ text-align: left;
+}
+
+li {
+	padding: 10px 15px;
+	border-bottom: 1px solid #ddd;
+}
+
+a[id^="show-"] {
+ text-decoration: none;
+	color: #fff;
+	text-shadow: 0 1px 0 rgba(0,0,0,.15);
+	border: 1px solid rgba(0,0,0,.1);
+	border-radius: 2px;
+	box-shadow: 0 0 0 1px #fff;
+	background: #8e8f8d;
+ 
+ display: inline-block;
+	margin: 15px;
+	padding: 1px 4px;
+	
+	font-family: Tahoma, sans-serif;
+	font-size: 11px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+
+}
+
+p[role="contentinfo"] {
+	padding: 20px;
+	margin: 0;
+	text-align: center;
+	color: #bbb;
+}
+
+span {
+	font-family: Georgia, serif;
+	font-style: italic;
+}
+
+p[role="contentinfo"] a {
+	color: #bbb;
+	text-decoration: none;
+}
+p[role="contentinfo"] a:hover {
+	color: #555;
+}
+
+
+
+/*
+ * Non-mobile screens
+ */
+@media screen and (min-width: 400px) {
+	.container {
+		width: 400px;
+		margin: 100px auto 0;
+		border: 1px solid #ddd;
+	}
+	h1 {
+		margin: -1px -1px 0 -1px;
+		border: 1px solid #989077;
+	}
+}
+</style>
 	</head>
 	<body>
-		STORIES
+<div class="container">
+  
+		<div class="list">
+		<h1>Stories</h1>
 		<ul>
 		{% for story in stories %}
 		<li>
@@ -15,6 +146,7 @@
 		</li>
 		{% endfor %}
 		</ul>
+		</div>
 		<form method="POST" action="/stories">
 			<input type="text" name="title" id="title"></input>
 			<button type="submit" value="Create">Create New Story</button>

@@ -138,7 +138,6 @@ def on_join(data):
 def on_leave(data):
     story_id = data['story_id']
     leave_room(story_id)
-    send(current_user.name + ' has left the room.', room=story_id)
     emit('user_left', {'user': current_user.name},
          room=story_id, broadcast=True)
 
