@@ -93,12 +93,14 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
             $scope.currentSegmentId = data.current_segment_id;
         });
 
+            $scope.colorCount = "#C2C6CB";
         $scope.snippetChange = function(snippet) {
             var requestObj = { segment_id: $scope.currentSegmentId,
                                text: snippet,
                                story_id: story.getStoryId(window.location.href)
                              };
             console.log('hey its changing');
+            $scope.colorCount = $scope.computeCountColor(snippet);
             mySocket.emit('modify_snippet_text', requestObj);
         };
 
@@ -108,7 +110,23 @@ var storifyApp = angular.module('storifyApp', ['btford.socket-io', 'cgNotify'])
                 console.log('server data', data);
             });
 
-            
+            $scope.computeCount = function(snippet) {
+                if (snippet === null || snippet === undefined) {
+                    return 40;
+                }
+                var remainingCount = 40 - snippet.length;
+                return remainingCount;
+            };
+
+            $scope.computeCountColor = function(snippet) {
+                if (snippet === null || snippet === undefined) {
+                    return "#ec5959";
+                }
+                if (snippet.length < 20 || snippet.length > 40) {
+                    return "#ec5959";
+                }
+                return "#C2C6CB";
+            };
             
         $scope.snippetFinal = function(snippet) {
             if (snippet.length < 20 || snippet.length > 40) {
