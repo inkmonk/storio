@@ -209,9 +209,26 @@
           right: -10px;
         }
     </style>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+        var serverName = "{{config['SERVER_NAME']}}";
+        var user = "{{current_user.email}}"
+        var colors = ["#A2A1D3", "#F6BA92", "#C4E49C", "#9CB3E4",
+        "#EEF1A0", "#F1D5A0", "#ABF1A0", "8CC7E2"]
+    </script>
+    <script type="text/javascript">
+        $(function(){ 
+            $('#type-story').keyup(function(){ 
+        var size = parseInt($(this).attr('size')); 
+        var chars = $(this).val().length; 
+        if(chars >= size) $(this).attr('size', chars); 
+            }); 
+        }); 
+    </script>
+    <script src="{{url_for('static', filename='bower_components/angular/angular.min.js')}}"></script>
   </head>
-<body ng-controller="storifyController">
-  <div class="story-container">
+<body>
+    <div class="story-container" ng-controller="storifyController" ng-cloak>
         {% raw %}    
         <div class="who-wrote" data-tooltip="{{content.first_snippet.user}} wrote this" ng-repeat="content in alreadyWritten | orderBy:'current_segment_id'">
           <span class="story" ng-repeat="item in content.first_snippet.text.split(' ') track by $index">
@@ -236,25 +253,9 @@
               {% endraw %}
             </ul>  
         </div>
-  </div>
+    </div>
   
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript">
-        var serverName = "{{config['SERVER_NAME']}}";
-        var user = "{{current_user.email}}"
-        var colors = ["#A2A1D3", "#F6BA92", "#C4E49C", "#9CB3E4",
-        "#EEF1A0", "#F1D5A0", "#ABF1A0", "8CC7E2"]
-    </script>
-    <script type="text/javascript">
-        $(function(){ 
-            $('#type-story').keyup(function(){ 
-        var size = parseInt($(this).attr('size')); 
-        var chars = $(this).val().length; 
-        if(chars >= size) $(this).attr('size', chars); 
-            }); 
-        }); 
-    </script>
-    <script src="{{url_for('static', filename='bower_components/angular/angular.min.js')}}"></script>
+
     <script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
     <script src="{{url_for('static', filename='bower_components/lodash/lodash.min.js')}}"></script>
     <script src="{{url_for('static', filename='bower_components/angular-notify/angular-notify.js')}}"></script>

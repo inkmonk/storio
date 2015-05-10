@@ -1,3 +1,18 @@
+{% macro with_error_check(field, class) %}
+    {% if field.errors|length > 0 %}
+        {{ "%s error" %(class) }}
+    {% else %}
+        {{ "%s" %(class) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro show_errors(field) %}
+      {% for error in field.errors %}
+      <div class="clear"></div>
+      <div class="alert alert-danger">{{ error|safe }}</div>
+      {% endfor %}
+{% endmacro %}
+
 <html>
 	<head>
 		<style type="text/css">
@@ -67,7 +82,8 @@
 		    <form method="POST" action="/login">
 				{{ login_user_form.hidden_tag() }} 
 		    	<input type="text" id="name" name="name" placeholder="Username" required="required" />
-		        <input type="password" id="password" name="password" placeholder="Password" required="required" />
+		        <input class='{{ with_error_check(login_user_form.password, "fnt-light-navyblue mtB")}}' type="password" id="password" name="password" placeholder="Password" required="required" />
+		        {{ show_errors(login_user_form.password) }}
 		        <button type="submit" name="login" class="btn btn-primary btn-block btn-large">Enter</button>
 		    </form>
 		</div>

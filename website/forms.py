@@ -17,9 +17,8 @@ class LoginForm(Form, NextFormMixin):
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
         self.remember.data = True
-        print "request"
-        print request.args
-        print "in init login form next data %s" % request.args.get('next', '')
+        self.name.errors = []
+        self.password.errors = []
         if not self.next.data:
             self.next.data = request.args.get('next', '')
 
@@ -48,12 +47,14 @@ class LoginForm(Form, NextFormMixin):
         print "got user as %s" % self.user
 
         if self.user is None:
-            self.email.errors.append(get_message('USER_DOES_NOT_EXIST')[0])
+            self.name.errors.append(get_message('USER_DOES_NOT_EXIST')[0])
             return False
         if not self.user.password:
+            print self.password.errors
             self.password.errors.append(get_message('PASSWORD_NOT_SET')[0])
             return False
         if not verify_and_update_password(self.password.data, self.user):
+            print self.password.errors
             self.password.errors.append(get_message('INVALID_PASSWORD')[0])
             return False
         return True
